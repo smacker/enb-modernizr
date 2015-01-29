@@ -66,6 +66,10 @@ module.exports = require('enb/lib/build-flow').create()
                 cache.set('modernizr-features', modernizrFeatureKey);
                 cache.set('modernizr-result', modernizrResult);
                 file.writeFileContent(sourcePath, source);
+
+                // Адовый хак, потому что просто обновить модернайзер сейчас не получится
+                modernizrResult = modernizrResult.replace('for ( i in props ) {', 'for ( i = 0; i < props.length; i++ ) {');
+
                 file.writeContent(
                     modernizrResult + '\n' +
                     '(function () {\n' +
